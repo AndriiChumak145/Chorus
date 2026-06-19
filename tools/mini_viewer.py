@@ -90,6 +90,11 @@ def parse_args() -> tuple[argparse.Namespace, list[str]]:
         action="store_true",
         help="Allow Mini Viewer text/image query encoders on CPU.",
     )
+    parser.add_argument(
+        "--saliency-enabled",
+        action="store_true",
+        help="Start Mini Viewer with saliency-map coloring enabled.",
+)
     parser.add_argument("--bbox-script", default=None, help="Optional Mini Viewer bbox script.")
     parser.add_argument("--device", default="auto", choices=["auto", "cuda", "cpu"])
     parser.add_argument("--backend", default="auto", choices=["auto", "gsplat", "torch"])
@@ -301,6 +306,8 @@ def build_command(args: argparse.Namespace, extra_args: list[str]) -> tuple[list
 
     if args.enable_feature_model_on_cpu:
         cmd.append("--enable-feature-model-on-cpu")
+    if args.saliency_enabled:
+        cmd.append("--saliency-enabled")
     if args.no_cpu_render_fallback:
         cmd.append("--no-cpu-render-fallback")
     if args.force_cpu_render:
